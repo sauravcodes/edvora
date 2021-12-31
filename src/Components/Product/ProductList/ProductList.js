@@ -22,10 +22,8 @@ function ProductList() {
     return setUnique(result);
   };
   const handleRightArrow = (idx) => {
-    console.log("1stage cleared");
     const conent = document.querySelector("#content" + idx);
     conent.scrollLeft += 300;
-    console.log("2stage cleared");
   };
 
   const handleLeftArrow = () => {
@@ -35,9 +33,7 @@ function ProductList() {
 
   useEffect(() => {
     findUniqueProuctName(ProductList || []);
-    console.log(unique);
   }, [ProductList]);
-  console.log(unique);
   return (
     <Wrapper>
       {unique?.map((pr, idx) => {
