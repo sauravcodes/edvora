@@ -21,7 +21,7 @@ function HomePage() {
 
   return (
     <Wrapper>
-      <ProductContext.Provider value={Product}>
+      <ProductContext.Provider value={[Product, setProducts]}>
         <FilterLayout />
         <ProductLayout />
       </ProductContext.Provider>

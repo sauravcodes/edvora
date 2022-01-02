@@ -16,6 +16,7 @@ export const Select = styled.select`
   border: none;
   color: #ffffff;
   border-radius: 5px;
+  cursor: pointer;
 
   option {
     padding: 0px 2px 1px;

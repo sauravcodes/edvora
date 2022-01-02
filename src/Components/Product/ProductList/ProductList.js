@@ -10,7 +10,7 @@ import {
 import { ProductContext } from "../../DashBoard/HomePage";
 
 function ProductList() {
-  const ProductList = useContext(ProductContext);
+  const [ProductList, setProducts] = useContext(ProductContext);
   const [unique, setUnique] = useState(null);
   const findUniqueProuctName = (arr) => {
     const result = [];

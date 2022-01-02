@@ -1,21 +1,61 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Wrapper, Select } from "./FilterBox.styles";
 import { ProductContext } from "../../../Components/DashBoard/HomePage";
 
 function FilterBox() {
-  const Product = useContext(ProductContext);
+  const [Product, setProducts] = useContext(ProductContext);
   const [productFilter, setProductFilter] = useState("");
   const [stateFilter, setStateFilter] = useState("");
   const [cityFilter, setCityFilter] = useState("");
+
   const handleProductFilter = (e) => {
-    return setProductFilter(e.target.value);
+    setProductFilter(e.target.value);
   };
   const handleStateFilter = (e) => {
-    return setStateFilter(e.target.value);
+    setStateFilter(e.target.value);
   };
   const handleCityFilter = (e) => {
-    return setCityFilter(e.target.value);
+    setCityFilter(e.target.value);
   };
+
+  useEffect(() => {
+    const filteredProduct = Product?.filter((pro) => {
+      if (productFilter === "") {
+        return pro;
+      } else if (productFilter !== "") {
+        return pro.product_name
+          .toLowerCase()
+          .includes(productFilter.toLowerCase());
+      }
+    });
+    setProducts(filteredProduct);
+  }, [productFilter]);
+
+  useEffect(() => {
+    const filteredProduct = Product?.filter((pro) => {
+      if (stateFilter === "") {
+        return pro;
+      } else if (stateFilter !== "") {
+        return pro.address.state
+          .toLowerCase()
+          .includes(stateFilter.toLowerCase());
+      }
+    });
+    setProducts(filteredProduct);
+  }, [stateFilter]);
+
+  useEffect(() => {
+    const filteredProduct = Product?.filter((pro) => {
+      if (cityFilter === "") {
+        return pro;
+      } else if (cityFilter !== "") {
+        return pro.address.city
+          .toLowerCase()
+          .includes(cityFilter.toLowerCase());
+      }
+    });
+    setProducts(filteredProduct);
+  }, [cityFilter]);
   return (
     <Wrapper>
       <Select onChange={handleProductFilter}>
@@ -34,21 +74,24 @@ function FilterBox() {
         <option value="none" selected disabled hidden>
           State
         </option>
-        {Product?.filter((pro) => {
-          if (productFilter === "") {
-            return pro;
-          } else if (
-            pro.product_name.toLowerCase().includes(productFilter.toLowerCase())
-          ) {
-            return pro;
-          }
-        }).map((pr) => {
-          return (
-            <option value={pr.address.state} key={pr.time}>
-              {pr.address.state}
-            </option>
-          );
-        })}
+        {Product &&
+          Product.filter((pro) => {
+            if (productFilter === "") {
+              return pro;
+            } else if (
+              pro.product_name
+                .toLowerCase()
+                .includes(productFilter.toLowerCase())
+            ) {
+              return pro;
+            }
+          }).map((pr) => {
+            return (
+              <option value={pr.address.state} key={pr.time}>
+                {pr.address.state}
+              </option>
+            );
+          })}
       </Select>
       <Select onChange={handleCityFilter}>
         <option value="none" selected disabled hidden>
